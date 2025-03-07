@@ -31,6 +31,8 @@ def check_parenthesis(expresion: str) -> bool:
     #Complejidad O(e)
     
     pila = Stack()
+
+    # comentario de prueba
     
     for elemento in expresion:
         if elemento == "(":
