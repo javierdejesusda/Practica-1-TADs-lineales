@@ -131,45 +131,50 @@ def insertar_valor(acumulado, elemento):
             izquierda = medio + 1
     acumulado.insert(izquierda, elemento)
 
-  
-    
-def main():
-    
-    # Complejidad O(n * m * log k)
-    # O(nl * l * log k)
+class SortedList:
+    def __init__(self):
+        self.acumulado = []
 
-    expresion = str(input("Introduzca la expresión: "))
 
-    if not validate(expresion):
-        print("Estructura incorrecta")
-        return
-    if not check_parenthesis(expresion):
-        print("Paréntesis incorrectos")
-        return
+    def run(self):
+        # Complejidad O(n * m * log k)
+        # O(nl * l * log k)
 
-    postfija = to_postfix(expresion)
-    print(f"Notación postfija: {postfija}")
+        expresion = str(input("Introduzca la expresión: "))
 
-    fichero = str(input("Introduzca el nombre del fichero en el que están los datos: "))
-    k_valores = int(input("Introduzca el número k de valores más altos que desea: "))
-    acumulado = []
+        if not validate(expresion):
+            print("Estructura incorrecta")
+            return
+        
+        if not check_parenthesis(expresion):
+            print("Paréntesis incorrectos")
+            return
+        
+        postfija = to_postfix(expresion)
+        print(f"Notación postfija: {postfija}")
 
-    with open(fichero, "r") as file:
-        for elementos in iter(lambda: read_line(file), None):  
-            valores = dict(zip("abcde", elementos))
-            resultado = calculate(postfija, valores)
+        fichero = str(input("Introduzca el nombre del fichero en el que están los datos: "))
+        k_valores = int(input("Introduzca el número k de valores más altos que desea: "))
+        
 
-            if len(acumulado) < k_valores:
-                insertar_valor(acumulado, (resultado, valores))
-            elif resultado > acumulado[-1][0]:
-                acumulado.pop()
-                insertar_valor(acumulado, (resultado, valores))
+        with open(fichero, "r") as file:
+            for elementos in iter(lambda: read_line(file), None):  
+                valores = dict(zip("abcde", elementos))
+                resultado = calculate(postfija, valores)
 
-    for resultado, valores in acumulado:
-        print(f"{resultado:.4f} para los valores: {tuple(valores.values())}")
+                if len(self.acumulado) < k_valores:
+                    insertar_valor(self.acumulado, (resultado, valores))
+                elif resultado > self.acumulado[-1][0]:
+                    self.acumulado.pop()
+                    insertar_valor(self.acumulado, (resultado, valores))
+
+        for resultado, valores in self.acumulado:
+            print(f"{resultado:.4f} para los valores: {tuple(valores.values())}")
+
+
 
 if __name__ == "__main__":
-    main()
-
+    tad = SortedList()
+    tad.run()
 
 
